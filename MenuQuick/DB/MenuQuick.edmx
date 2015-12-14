@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MenuQuickModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cust">
+          <Key>
+            <PropertyRef Name="cust_email" />
+          </Key>
+          <Property Name="cust_email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cust_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Prod">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cust_email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="item" Type="int" Nullable="false" />
+          <Property Name="prod_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Prod_Cust">
+          <End Role="Cust" Type="Self.Cust" Multiplicity="1" />
+          <End Role="Prod" Type="Self.Prod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cust">
+              <PropertyRef Name="cust_email" />
+            </Principal>
+            <Dependent Role="Prod">
+              <PropertyRef Name="cust_email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MenuQuickModelStoreContainer">
+          <EntitySet Name="Cust" EntityType="Self.Cust" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prod" EntityType="Self.Prod" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Prod_Cust" Association="Self.FK_Prod_Cust">
+            <End Role="Cust" EntitySet="Cust" />
+            <End Role="Prod" EntitySet="Prod" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MenuQuickModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MenuQuickEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cust" EntityType="MenuQuickModel.Cust" />
+          <EntitySet Name="Prod" EntityType="MenuQuickModel.Prod" />
+          <AssociationSet Name="FK_Prod_Cust" Association="MenuQuickModel.FK_Prod_Cust">
+            <End Role="Cust" EntitySet="Cust" />
+            <End Role="Prod" EntitySet="Prod" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Cust">
+          <Key>
+            <PropertyRef Name="cust_email" />
+          </Key>
+          <Property Name="cust_email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cust_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Prod" Relationship="MenuQuickModel.FK_Prod_Cust" FromRole="Cust" ToRole="Prod" />
+        </EntityType>
+        <EntityType Name="Prod">
+          <Key>
+            <PropertyRef Name="prod_id" />
+          </Key>
+          <Property Name="prod_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cust_email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="item" Type="Int32" Nullable="false" />
+          <Property Name="prod_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cust" Relationship="MenuQuickModel.FK_Prod_Cust" FromRole="Prod" ToRole="Cust" />
+        </EntityType>
+        <Association Name="FK_Prod_Cust">
+          <End Type="MenuQuickModel.Cust" Role="Cust" Multiplicity="1" />
+          <End Type="MenuQuickModel.Prod" Role="Prod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cust">
+              <PropertyRef Name="cust_email" />
+            </Principal>
+            <Dependent Role="Prod">
+              <PropertyRef Name="cust_email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MenuQuickModelStoreContainer" CdmEntityContainer="MenuQuickEntities">
+          <EntitySetMapping Name="Cust">
+            <EntityTypeMapping TypeName="MenuQuickModel.Cust">
+              <MappingFragment StoreEntitySet="Cust">
+                <ScalarProperty Name="cust_name" ColumnName="cust_name" />
+                <ScalarProperty Name="cust_email" ColumnName="cust_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prod">
+            <EntityTypeMapping TypeName="MenuQuickModel.Prod">
+              <MappingFragment StoreEntitySet="Prod">
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="prod_name" ColumnName="prod_name" />
+                <ScalarProperty Name="item" ColumnName="item" />
+                <ScalarProperty Name="cust_email" ColumnName="cust_email" />
+                <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

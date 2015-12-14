@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e1e56244c1a74a91bf64340c51fc59e9" Name="Diagram1">
+        <EntityTypeShape EntityType="MenuQuickModel.Cust" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="MenuQuickModel.Prod" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="MenuQuickModel.FK_Prod_Cust" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
