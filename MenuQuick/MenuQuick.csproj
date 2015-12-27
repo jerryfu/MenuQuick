@@ -245,12 +245,15 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="4.jpg" />
-    <Content Include="5.jpg" />
-    <Content Include="6.jpg" />
-    <Content Include="7.jpg" />
-    <Content Include="8.jpg" />
-    <Content Include="9.jpg" />
+    <Content Include="P1.jpg" />
+    <Content Include="P2.jpg" />
+    <Content Include="P3.jpg" />
+    <Content Include="P4.jpg" />
+    <Content Include="P5.jpg" />
+    <Content Include="P6.jpg" />
+    <Content Include="P7.jpg" />
+    <Content Include="P8.jpg" />
+    <Content Include="P9.jpg" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
