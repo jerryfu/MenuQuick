@@ -11,6 +11,7 @@
           </Key>
           <Property Name="cust_email" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="cust_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="pwd" Type="varchar" MaxLength="16" />
         </EntityType>
         <EntityType Name="Prod">
           <Key>
@@ -21,6 +22,15 @@
           <Property Name="item" Type="int" Nullable="false" />
           <Property Name="prod_name" Type="nvarchar" MaxLength="60" Nullable="false" />
           <Property Name="price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="token_id" />
+          </Key>
+          <Property Name="token_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cust_email" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="tocken" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="expired_date" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_Prod_Cust">
           <End Role="Cust" Type="Self.Cust" Multiplicity="1" />
@@ -34,12 +44,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Token_Cust">
+          <End Role="Cust" Type="Self.Cust" Multiplicity="1" />
+          <End Role="Token" Type="Self.Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cust">
+              <PropertyRef Name="cust_email" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="cust_email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MenuQuickModelStoreContainer">
           <EntitySet Name="Cust" EntityType="Self.Cust" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Prod" EntityType="Self.Prod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Token" EntityType="Self.Token" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Prod_Cust" Association="Self.FK_Prod_Cust">
             <End Role="Cust" EntitySet="Cust" />
             <End Role="Prod" EntitySet="Prod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Token_Cust" Association="Self.FK_Token_Cust">
+            <End Role="Cust" EntitySet="Cust" />
+            <End Role="Token" EntitySet="Token" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -53,6 +80,11 @@
             <End Role="Cust" EntitySet="Cust" />
             <End Role="Prod" EntitySet="Prod" />
           </AssociationSet>
+          <EntitySet Name="Token" EntityType="MenuQuickModel.Token" />
+          <AssociationSet Name="FK_Token_Cust" Association="MenuQuickModel.FK_Token_Cust">
+            <End Role="Cust" EntitySet="Cust" />
+            <End Role="Token" EntitySet="Token" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Cust">
           <Key>
@@ -61,6 +93,8 @@
           <Property Name="cust_email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="cust_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Prod" Relationship="MenuQuickModel.FK_Prod_Cust" FromRole="Cust" ToRole="Prod" />
+          <Property Name="pwd" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Token" Relationship="MenuQuickModel.FK_Token_Cust" FromRole="Cust" ToRole="Token" />
         </EntityType>
         <EntityType Name="Prod">
           <Key>
@@ -85,6 +119,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Token">
+          <Key>
+            <PropertyRef Name="token_id" />
+          </Key>
+          <Property Name="token_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cust_email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="tocken" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="expired_date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Cust" Relationship="MenuQuickModel.FK_Token_Cust" FromRole="Token" ToRole="Cust" />
+        </EntityType>
+        <Association Name="FK_Token_Cust">
+          <End Type="MenuQuickModel.Cust" Role="Cust" Multiplicity="1" />
+          <End Type="MenuQuickModel.Token" Role="Token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cust">
+              <PropertyRef Name="cust_email" />
+            </Principal>
+            <Dependent Role="Token">
+              <PropertyRef Name="cust_email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -94,6 +150,7 @@
           <EntitySetMapping Name="Cust">
             <EntityTypeMapping TypeName="MenuQuickModel.Cust">
               <MappingFragment StoreEntitySet="Cust">
+                <ScalarProperty Name="pwd" ColumnName="pwd" />
                 <ScalarProperty Name="cust_name" ColumnName="cust_name" />
                 <ScalarProperty Name="cust_email" ColumnName="cust_email" />
               </MappingFragment>
@@ -107,6 +164,16 @@
                 <ScalarProperty Name="item" ColumnName="item" />
                 <ScalarProperty Name="cust_email" ColumnName="cust_email" />
                 <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Token">
+            <EntityTypeMapping TypeName="MenuQuickModel.Token">
+              <MappingFragment StoreEntitySet="Token">
+                <ScalarProperty Name="expired_date" ColumnName="expired_date" />
+                <ScalarProperty Name="tocken" ColumnName="tocken" />
+                <ScalarProperty Name="cust_email" ColumnName="cust_email" />
+                <ScalarProperty Name="token_id" ColumnName="token_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

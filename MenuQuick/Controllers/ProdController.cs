@@ -7,7 +7,6 @@ using System.Web.Http;
 using MenuQuick.DB;
 namespace MenuQuick.Controllers
 {
-
     public class ProdController : ApiController
     {
         public IEnumerable<m_Prod> Get()

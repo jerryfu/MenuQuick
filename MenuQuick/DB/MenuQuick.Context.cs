@@ -27,5 +27,6 @@ namespace MenuQuick.DB
     
         public virtual DbSet<Cust> Cust { get; set; }
         public virtual DbSet<Prod> Prod { get; set; }
+        public virtual DbSet<Token> Token { get; set; }
     }
 }

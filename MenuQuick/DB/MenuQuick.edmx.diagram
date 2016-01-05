@@ -8,6 +8,8 @@
         <EntityTypeShape EntityType="MenuQuickModel.Cust" Width="1.5" PointX="0.75" PointY="1.25" />
         <EntityTypeShape EntityType="MenuQuickModel.Prod" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="MenuQuickModel.FK_Prod_Cust" />
+        <EntityTypeShape EntityType="MenuQuickModel.Token" Width="1.5" PointX="0.75" PointY="3.75" />
+        <AssociationConnector Association="MenuQuickModel.FK_Token_Cust" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

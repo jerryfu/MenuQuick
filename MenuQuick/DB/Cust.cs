@@ -18,12 +18,16 @@ namespace MenuQuick.DB
         public Cust()
         {
             this.Prod = new HashSet<Prod>();
+            this.Token = new HashSet<Token>();
         }
     
         public string cust_email { get; set; }
         public string cust_name { get; set; }
+        public string pwd { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Prod> Prod { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Token> Token { get; set; }
     }
 }
